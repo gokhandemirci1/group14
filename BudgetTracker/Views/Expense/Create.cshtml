@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Yeni Harcama Ekle";
+    var categories = ViewBag.Categories as IEnumerable<BudgetTracker.Models.Category> ?? new List<BudgetTracker.Models.Category>();
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">Yeni Harcama Ekle</h2>
+        
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Error
+            </div>
+        }
+
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label for="amount" class="form-label">Tutar</label>
+                <input type="number" step="0.01" min="0.01" class="form-control" id="amount" name="amount" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Açıklama</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="expenseDate" class="form-label">Tarih</label>
+                <input type="date" class="form-control" id="expenseDate" name="expenseDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" required>
+                <small class="form-text text-muted">Geçmiş veya gelecek tarih seçebilirsiniz.</small>
+            </div>
+            <div class="mb-3">
+                <label for="categoryId" class="form-label">Kategori</label>
+                <select class="form-select" id="categoryId" name="categoryId" required>
+                    <option value="">Kategori Seçin</option>
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+                <small class="form-text text-muted">
+                    Kategori yok mu? <a asp-controller="Category" asp-action="Create">Yeni kategori oluştur</a>
+                </small>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Kaydet</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

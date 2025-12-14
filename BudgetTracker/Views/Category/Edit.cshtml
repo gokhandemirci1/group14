@@ -1,0 +1,41 @@
+@model BudgetTracker.Models.Category
+@{
+    ViewData["Title"] = "Kategori Düzenle";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">Kategori Düzenle</h2>
+        
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Error
+            </div>
+        }
+
+        <form asp-action="Edit" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="mb-3">
+                <label for="name" class="form-label">Kategori Adı</label>
+                <input type="text" class="form-control" id="name" name="name" value="@Model.Name" required autofocus>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Açıklama (Opsiyonel)</label>
+                <textarea class="form-control" id="description" name="description" rows="3">@Model.Description</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="color" class="form-label">Renk</label>
+                <input type="color" class="form-control form-control-color" id="color" name="color" value="@Model.Color" title="Kategori rengi seçin">
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,51 @@
+@model BudgetTracker.Models.Expense
+@{
+    ViewData["Title"] = "Harcama Düzenle";
+    var categories = ViewBag.Categories as IEnumerable<BudgetTracker.Models.Category> ?? new List<BudgetTracker.Models.Category>();
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h2 class="mb-4">Harcama Düzenle</h2>
+        
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.Error
+            </div>
+        }
+
+        <form asp-action="Edit" method="post">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="mb-3">
+                <label for="amount" class="form-label">Tutar</label>
+                <input type="number" step="0.01" min="0.01" class="form-control" id="amount" name="amount" value="@Model.Amount" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Açıklama</label>
+                <textarea class="form-control" id="description" name="description" rows="3" required>@Model.Description</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="expenseDate" class="form-label">Tarih</label>
+                <input type="date" class="form-control" id="expenseDate" name="expenseDate" value="@Model.ExpenseDate.ToString("yyyy-MM-dd")" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoryId" class="form-label">Kategori</label>
+                <select class="form-select" id="categoryId" name="categoryId" required>
+                    @foreach (var category in categories)
+                    {
+                        <option value="@category.Id" selected="@(category.Id == Model.CategoryId)">@category.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+                <a asp-action="Index" class="btn btn-secondary">İptal</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,156 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    var weeklyByCategory = ViewBag.WeeklyByCategory as Dictionary<string, decimal> ?? new Dictionary<string, decimal>();
+    var monthlyByCategory = ViewBag.MonthlyByCategory as Dictionary<string, decimal> ?? new Dictionary<string, decimal>();
+    var sixMonthsByCategory = ViewBag.SixMonthsByCategory as Dictionary<string, decimal> ?? new Dictionary<string, decimal>();
+}
+
+<div class="container-fluid">
+    <h1 class="mb-4">Dashboard</h1>
+
+    <!-- Özet Kartlar -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary">
+                <div class="card-body">
+                    <h5 class="card-title">Haftalık Toplam</h5>
+                    <h2 class="card-text">@ViewBag.WeeklyTotal.ToString("C2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-success">
+                <div class="card-body">
+                    <h5 class="card-title">Aylık Toplam</h5>
+                    <h2 class="card-text">@ViewBag.MonthlyTotal.ToString("C2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-white bg-info">
+                <div class="card-body">
+                    <h5 class="card-title">6 Aylık Toplam</h5>
+                    <h2 class="card-text">@ViewBag.SixMonthsTotal.ToString("C2")</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grafikler -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Haftalık Harcamalar (Kategori Bazında)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="weeklyChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Aylık Harcamalar (Kategori Bazında)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>6 Aylık Harcamalar (Kategori Bazında)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="sixMonthsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Haftalık Grafik
+        const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+        const weeklyLabels = @Html.Raw(weeklyByCategory.Keys.Any() ? "[" + string.Join(", ", weeklyByCategory.Keys.Select(k => $"'{k}'")) + "]" : "[]");
+        const weeklyData = [@string.Join(", ", weeklyByCategory.Values)];
+        new Chart(weeklyCtx, {
+            type: 'bar',
+            data: {
+                labels: weeklyLabels,
+                datasets: [{
+                    label: 'Tutar (₺)',
+                    data: weeklyData,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // Aylık Grafik
+        const monthlyCtx = document.getElementById('monthlyChart').getContext('2d');
+        const monthlyLabels = @Html.Raw(monthlyByCategory.Keys.Any() ? "[" + string.Join(", ", monthlyByCategory.Keys.Select(k => $"'{k}'")) + "]" : "[]");
+        const monthlyData = [@string.Join(", ", monthlyByCategory.Values)];
+        new Chart(monthlyCtx, {
+            type: 'bar',
+            data: {
+                labels: monthlyLabels,
+                datasets: [{
+                    label: 'Tutar (₺)',
+                    data: monthlyData,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        // 6 Aylık Grafik
+        const sixMonthsCtx = document.getElementById('sixMonthsChart').getContext('2d');
+        const sixMonthsLabels = @Html.Raw(sixMonthsByCategory.Keys.Any() ? "[" + string.Join(", ", sixMonthsByCategory.Keys.Select(k => $"'{k}'")) + "]" : "[]");
+        const sixMonthsData = [@string.Join(", ", sixMonthsByCategory.Values)];
+        new Chart(sixMonthsCtx, {
+            type: 'line',
+            data: {
+                labels: sixMonthsLabels,
+                datasets: [{
+                    label: 'Tutar (₺)',
+                    data: sixMonthsData,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 2,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}
+
