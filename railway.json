@@ -5,7 +5,7 @@
     "buildCommand": "cd BudgetTracker && dotnet restore && dotnet publish -c Release -o /app/publish"
   },
   "deploy": {
-    "startCommand": "cd BudgetTracker && dotnet run --urls http://0.0.0.0:$PORT",
+    "startCommand": "dotnet /app/publish/BudgetTracker.dll --urls http://0.0.0.0:$PORT",
     "restartPolicyType": "ON_FAILURE",
     "restartPolicyMaxRetries": 10
   }
