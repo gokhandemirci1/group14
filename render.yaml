@@ -1,12 +1,9 @@
 services:
   - type: web
     name: budgettracker
-    env: dotnet
-    buildCommand: cd BudgetTracker && dotnet restore && dotnet publish -c Release -o ./publish
-    startCommand: cd BudgetTracker && dotnet ./publish/BudgetTracker.dll --urls http://0.0.0.0:$PORT
+    runtime: docker
+    dockerfilePath: ./Dockerfile
     envVars:
       - key: ASPNETCORE_ENVIRONMENT
         value: Production
-      - key: ASPNETCORE_URLS
-        value: http://0.0.0.0:$PORT
 
