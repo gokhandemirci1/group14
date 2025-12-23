@@ -488,3 +488,4 @@ Proje, eğitim amaçlı veya küçük ölçekli kullanım için uygundur. Produc
 **Rapor Tarihi:** 2024  
 **Proje Versiyonu:** 1.0  
 **Framework:** .NET 9.0
+

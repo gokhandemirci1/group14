@@ -67,3 +67,4 @@ SQLite veritabanı (`BudgetTracker.db`) proje çalıştırıldığında otomatik
 
 
 
+

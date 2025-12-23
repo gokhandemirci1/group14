@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "buildCommand": "echo '⚠️ UYARI: Vercel .NET Core uygulamalarını desteklemez. Railway veya Render kullanmanız önerilir.'",
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
+

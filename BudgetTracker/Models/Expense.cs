@@ -4,8 +4,9 @@ namespace BudgetTracker.Models;
 /// Harcama entity sınıfı.
 /// Kullanıcılar geçmiş ve gelecek tarihli harcamalar ekleyebilir.
 /// </summary>
+
 public class Expense
-{
+
     // Primary Key
     public int Id { get; private set; }
 
@@ -77,7 +78,4 @@ public class Expense
         CategoryId = categoryId;
     }
 }
-
-
-
 

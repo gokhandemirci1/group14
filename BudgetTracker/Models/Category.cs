@@ -4,6 +4,7 @@ namespace BudgetTracker.Models;
 /// Harcama kategorisi entity sınıfı.
 /// Her kullanıcı kendi kategorilerini oluşturabilir.
 /// </summary>
+
 public class Category
 {
     // Primary Key
@@ -15,15 +16,14 @@ public class Category
     // Kategori açıklaması (opsiyonel)
     public string? Description { get; private set; }
 
-    // Kategori rengi (UI'da gösterim için - hex format: #FF5733)
+    // Kategori rengi (UI'da gösterim için - hex format:rgb(255, 47, 0))
     public string Color { get; private set; } = "#007bff";
 
     // Oluşturulma tarihi
     public DateTime CreatedAt { get; private set; }
 
     // Foreign Key: Hangi kullanıcıya ait
-    public int UserId { get; private set; }
-
+    public int UserId { get; private set
     // Navigation Property: Kategoriye ait kullanıcı
     public virtual User User { get; private set; } = null!;
 
@@ -64,7 +64,4 @@ public class Category
         }
     }
 }
-
-
-
 

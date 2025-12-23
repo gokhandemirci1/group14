@@ -5,10 +5,7 @@ using System.Text;
 
 namespace BudgetTracker.Services;
 
-/// <summary>
-/// Kullanıcı işlemleri için Service Implementation.
-/// SOLID - Single Responsibility: Sadece kullanıcı iş mantığından sorumlu.
-/// </summary>
+
 public class UserService : IUserService
 {
     private readonly IRepository<User> _userRepository;
@@ -83,6 +80,7 @@ public class UserService : IUserService
         return hashOfInput == passwordHash;
     }
 }
+
 
 
 
